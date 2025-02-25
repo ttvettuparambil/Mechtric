@@ -15,6 +15,13 @@
     margin-left: 0; // 1
 }
 
+.navList{
+    margin-bottom: 20px;
+    @include breakpoint("medium") {
+        margin-bottom: 40px;
+    }
+}
+
 .navList-action,
 .navBar-action {
     text-decoration: none;
@@ -41,15 +48,35 @@
 
     &::before,
     &::after {
-        top: 50%; // 1
+        top: 40%;
+        width: 24px;
+        height: 24px;
+        border-color: stencilColor('checkListBorderColor');
+        margin-right: 18px;
+    }
+
+    &::after{
+        background-image: url('https://cdn11.bigcommerce.com/s-x2ggalr5r0/images/stencil/original/image-manager/arrow.png?t=1730122898');
+        background-size: 55% !important;
+        background-position: center !important;
     }
 
     &::before {
         margin-top: -$checkRadio-outerSize / 2;
+        border-radius: unset;
+    }
+
+    &.is-selected{
+        &::before{
+            background-color: stencilColor('global-secondary-theme-color');
+            border: unset;
+        }
     }
 
     &::after {
         margin-top: -$checkRadio-outerSize / 2 + remCalc(1);
+        background-position: 1px 20%;
+        background-size: 90%;
     }
 
     &:focus {

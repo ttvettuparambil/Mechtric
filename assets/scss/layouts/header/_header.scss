@@ -35,7 +35,6 @@
 
 .header {
     background-color: $header-bg;
-    border-bottom: container("border");
     height: $header-height;
     position: fixed;
     top: 0;
@@ -63,18 +62,27 @@
 .header-logo {
     font-size: 0;   // 1
     height: $header-height;
-    margin: 0 remCalc($header-toggle-width); // 2
-    text-align: center;
+    margin: 0;
+    max-width: 159px;
+    max-height: 20px;
+    height: 100%;
+    text-align: left;
 
-    @include breakpoint("small") { // 4
-        margin-left: remCalc($header-toggle-width * 1.5);
-        margin-right: remCalc($header-toggle-width * 1.5);
+    @include breakpoint("small") { 
+        max-width: 319px;
+    }
+
+    .header-logo__link{
+        max-height: 40px;
+        display: inline-block;
+
     }
 
     @include breakpoint("medium") {
         height: auto;
-        margin: (spacing("double") + spacing("base")) auto (spacing("double") + spacing("single"));
         padding: 0;
+        max-height: 61px;
+        text-align: center;
 
         .header.fixed & {
             background-color: color("greys", "lightest");
@@ -176,9 +184,6 @@
     position: relative;
     width: 100%;
 
-    @include breakpoint("medium") {
-        min-height: get-height(stencilString("logo_size"));
-    }
 }
 
 .header-logo-image-container::after {
@@ -189,7 +194,7 @@
 .header-logo-image {
     display: block;
     margin: 0 auto;
-    max-height: remCalc($header-height) - $header-logo-marginVertical * 2;
+    max-height: 100%;
 
     @include breakpoint("medium") {
         max-height: none;
@@ -211,30 +216,36 @@
 // -----------------------------------------------------------------------------
 
 .mobileMenu-toggle {
-    @include square($header-toggle-width);
+    width: 3rem;
+    height: 3rem;
     display: inline-block;
     font-size: 0;
-    left: 0;
+    right: -6px;
     overflow: hidden;
-    padding: 0 remCalc(18);
-    position: absolute;
     z-index: zIndex("high");
+    position: absolute;
+    top: 48px;
 
-    @include breakpoint("medium") {
+    @include breakpoint(1024px) {
         display: none;
+    }
+
+    &:focus{
+    outline: none !important;
     }
 
     .mobileMenu-toggleIcon,
     .mobileMenu-toggleIcon::before,
     .mobileMenu-toggleIcon::after {
-        background: $header-font-color;
+        background: #000;
         content: "";
         display: block;
         height: 2px;
         position: absolute;
         transform: rotate(0deg);
         transition: transform 100ms ease-in, top 100ms ease-in 150ms, bottom 100ms ease-in 150ms; // 1
-        width: remCalc(20);
+        width: remCalc(18);
+        z-index: 99999;
     }
 
     .mobileMenu-toggleIcon {
@@ -243,11 +254,11 @@
     }
 
     .mobileMenu-toggleIcon::before {
-        top: -0.5rem;
+        top: -0.4rem;
     }
 
     .mobileMenu-toggleIcon::after {
-        bottom: -0.5rem;
+        bottom: -0.4rem;
     }
 
     &.is-open .mobileMenu-toggleIcon {
@@ -256,10 +267,10 @@
 
         &::before,
         &::after {
-            background-color: $header-font-color;
+            background: #000000;
             bottom: auto;
             top: auto;
-            transition: transform 100ms ease-in 150ms, top 100ms ease-in, bottom 100ms ease-in; // Animate lines from hamburger to 'x'
+            transition: transform 100ms ease-in 150ms, top 100ms ease-in, bottom 100ms ease-in;
         }
 
         &::before {
@@ -271,6 +282,141 @@
             bottom: 0;
             transform: rotate(-45deg);
         }
+    }
+}
+
+.cart-account-wrapper{
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+    vertical-align: middle;
+    margin-right: 14px;
+
+    @include breakpoint("medium") {
+    margin-right: 0;
+    }
+
+    .navUser-item--account{
+        @include breakpoint('medium'){
+            margin-left: 40px;
+        }
+    }
+
+}
+
+
+.logo-cart-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    flex: 20%;
+    @include breakpoint('medium'){
+        width: auto;
+    }
+}
+
+
+.mobile-navPages-quickSearch{
+    position: relative;
+    top: 60px;
+    padding: 10px 0;
+    background-color: #fff;
+    .container{
+        max-width: 90%;
+        margin: 0 auto;
+    }
+}
+
+#nav-menu-quick-search{
+    font-weight: 300;
+}
+//header customstyles
+
+.top-header{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 23px;
+    background: stencilColor('global-theme-color');
+    z-index: 9999;
+    position: relative;
+    @include breakpoint('large'){
+        padding: 10px 80px;
+    }
+    span{
+        color: stencilColor('color-white');
+        a{
+            color: stencilColor('color-white');
+            text-decoration: none;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 25px;
+        }
+    }
+    .seprator{
+        margin: 0 22px;
+    }
+    .emailNumber{
+        display: none;
+        @include breakpoint('medium'){
+            display: block;   
+        }
+    }
+    .contact-wrapper{
+        display: flex;
+       .phoneNumber{
+            position: relative;
+            margin-right: 28px;
+            @include breakpoint('medium'){
+                display: block;   
+                margin-right: 0;
+            }
+
+            &::before{
+                position: absolute;
+                left: 0;
+                top: 5px;
+                content: '';
+                width: 9px;
+                height: 14px;
+                background-image: url("https://cdn11.bigcommerce.com/s-pz1ihc8gwz/images/stencil/original/image-manager/8.png?t=1740124025");
+            }
+            a{
+                margin-left: 14px;
+                display: none;
+
+                @include breakpoint('medium'){
+                    display: block;   
+                }
+            }
+            }
+
+            .mechtrickemail{
+            position: relative;
+            &::after{
+                position: absolute;
+                left: 0;
+                top: 5px;
+                content: '';
+                width: 20px;
+                height: 13px;
+                background-image: url("https://cdn11.bigcommerce.com/s-pz1ihc8gwz/images/stencil/original/image-manager/6.png?t=1740124352");
+            }
+            a{
+                margin-left: 25px;
+                display: none;
+
+                @include breakpoint('medium'){
+                    display: block;   
+                }
+            }
+            }
 
     }
+
+.page-wrapper{
+    a{
+        font-weight: 600;
+    }
+}
+
 }

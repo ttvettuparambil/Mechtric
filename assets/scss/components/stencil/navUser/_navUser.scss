@@ -17,76 +17,77 @@
 // -----------------------------------------------------------------------------
 
 .navUser {
-    @include nav($style: "navBar", $wrapper: "nav");
-    @include verticalPositionMiddle("absolute");
+    @include verticalPositionMiddle("relative");
     right: 0;
-    top: 26px; // 2
+    top: 0px; // 2
     width: 100%; // 4
-    z-index: zIndex("lowest"); // 5.
+    z-index: 11;
+    padding: 5px 23px;
+    transform: translate(0%);
+    padding: 0;
+    background-color: #fff;
+    @include breakpoint(medium){
+    top: 26px; // 2
+    @include nav($style: "navBar", $wrapper: "nav");
+    }
 
     @include breakpoint("medium") {
-        padding: 0 spacing("single");
         position: relative;
         right: auto;
         top: auto;
         transform: none;
         z-index: zIndex("high");
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #AAB9C5;
+        padding: 5px 23px;
     }
 
-    .dropdown-menu {
-        background-color: stencilColor("navUser-dropdown-backgroundColor");
-        border: 1px solid stencilColor("navUser-dropdown-borderColor");
-        box-shadow: container("dropShadow");
-        position: absolute;
+    @include breakpoint("large"){
+        padding: 0px 80px;
+    }
 
-        &.is-open {
-            &::before {
-                @include css-triangle(
-                    $triangle-direction: "bottom",
-                    $triangle-size: 10px,
-                    $triangle-color: stencilColor("navUser-dropdown-borderColor")
-                );
-                bottom: 100%;
-                left: spacing("half");
-                position: absolute;
-            }
+    .nav-inner-wrapper{
+        max-width: 1920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 auto;
+        width: 100%;
+        padding: 15px 23px;
 
-            &::after {
-                @include css-triangle(
-                    $triangle-direction: "bottom",
-                    $triangle-size: 8px,
-                    $triangle-color: stencilColor("navUser-dropdown-backgroundColor")
-                );
-                bottom: 100%;
-                left: spacing("half") + remCalc(2px);
-                position: absolute;
-            }
+        @include breakpoint("medium") {
+            padding: 0;
         }
+
+    }
+
+    &::before{
+        content: none;
+    }
+
+    &::after{
+        content: none;
     }
 }
 
 .navUser-section {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    width: 100%;
+    align-items: center;
+    gap: 0 10px;
     @include breakpoint("medium") {
         position: relative; // 7
+        display: inline-block
     }
+
 }
 
 .navUser-action {
-    color: stencilColor("navUser-color");
-    font-weight: fontWeight("bold");
-    padding: spacing("base") spacing("half");
-    text-decoration: none;
-    text-transform: uppercase;
-
-    &:hover,
-    &.is-open {
-        color: stencilColor("navUser-color-hover");
-
-        svg {
-            fill: stencilColor("navUser-color-hover");
-            stroke: stencilColor("navUser-color-hover");
-        }
-    }
 
     .icon {
         @include square(8px);
@@ -135,8 +136,8 @@
 }
 
 .navUser-item {
-    display: none;
-
+    list-style: none;
+    
     @include breakpoint("medium") {
         display: block;
 
@@ -156,13 +157,6 @@
 .navUser-item--cart {
     display: block;
 
-    // removing cart link for small screens when quantity is 0
-    &__hidden-s {
-        @media (max-width: $screen-small) {
-            display: none;
-        }
-    }
-
     .navUser-action {
         color: stencilColor("navUser-color");
 
@@ -174,11 +168,18 @@
 
     .dropdown-menu {
         max-width: remCalc(320px);
+        max-width: 240px !important;
+        width: 100vw !important;
+
+        @include breakpoint('small'){
+        max-width: 350px;
+        width: 100vw;
+        }
 
         &.is-open {
-            left: auto !important; // 7
+            left: auto; // 7
             right: remCalc(5px); // 7
-            top: auto !important; // 7
+            top: auto; // 7
             @include breakpoint("medium") {
                 right: 0; // 7
             }
@@ -222,6 +223,11 @@
 }
 
 .navUser-item--account {
+    margin-right: 14px;
+    @include breakpoint("medium") {
+    margin-right: 0;
+    }
+
     .navUser-or {
         + .navUser-action {
             margin-right: -0.5rem; // 1
@@ -230,6 +236,29 @@
 
     .navUser-action {
         display: inline-block;
+        &:nth-child(1){
+            padding-right: 0;
+        }
+        &:nth-child(2){
+            padding-left: 0;
+        }
+        img{
+            width: 11px;
+            height: 15px;
+            @include breakpoint("medium") {
+                width: 16px;
+                height: 19px;
+            }
+        }
+    }
+
+}
+
+.menu-items-wrapper{
+    display: flex;
+    align-items: baseline;  
+    @include breakpoint('medium'){
+     align-items: normal;   
     }
 }
 
@@ -268,47 +297,6 @@
     }
 }
 
-.dropdown--quickSearch {
-    background-color: $dropdown--quickSearch-backgroundColor;
-    display: none;
-    padding: spacing("single") 0;
-
-    @include breakpoint("small") {
-        padding: spacing("double");
-    }
-
-    &.is-open {
-        display: block;
-        left: 0 !important; // 1
-        outline: none;
-        right: 0 !important; // 1
-        width: 100% !important;
-        z-index: zIndex("high");
-    }
-
-    .form {
-        margin: auto;
-        max-width: 30rem;
-    }
-
-    .form,
-    .form-field {
-        margin-bottom: 0;
-    }
-
-    .form-input {
-        font-size: fontSize("small");
-        height: unset;
-    }
-
-    .productGrid {
-        padding: spacing("single") 0 0;
-
-        @include breakpoint("small") {
-            padding: spacing("double") 0 0;
-        }
-    }
-}
 
 // Counter Pill
 // -----------------------------------------------------------------------------
@@ -317,18 +305,45 @@
 //
 // -----------------------------------------------------------------------------
 
+.cart-icon{
+    position: relative;
+    img{
+        width: 17px;
+        height: 15px; 
+     @include breakpoint("medium") {
+        width: 20px;
+        height: 20px; 
+     }  
+    }
+}
+
+
 .countPill {
     background-color: stencilColor("navUser-indicator-backgroundColor");
     border-radius: 50%;
-    color: color("whites", "bright");
+    color: stencilColor('color-greyDarkest');
+    font-size: 12px;
     display: none;
-    font-size: fontSize("tiny");
     font-weight: fontWeight("bold");
-    height: 20px; // 1
-    line-height: 20px; // 1
+    height: 18px; // 1
+    line-height: 18px; // 1
     margin-left: spacing("eighth");
     text-align: center;
-    width: 20px; // 1
+    width: 18px; // 1
+    top: -5px;
+    position: absolute;
+    left: 16%;
+    
+    @include breakpoint(medium){
+        width: fit-content; // 1
+        height: 18px; // 1
+        font-size: 12px;
+        line-height: 19px; // 
+        position: absolute;
+        top: 0;
+        left: 51%;
+        padding: 0 6px;
+    }
 }
 
 .countPill--positive {
@@ -339,3 +354,4 @@
     background-color: color("greys", "lighter");
     color: color("greys", "darker");
 }
+

@@ -1,71 +1,170 @@
-{{#if children}}
-<a class="navPages-action has-subMenu{{#if is_active}} activePage{{/if}}"
-   href="{{url}}"
-   data-collapsible="navPages-{{id}}"
->
-    {{name}}
-    <i class="icon navPages-action-moreIcon" aria-hidden="true">
-        <svg><use href="#icon-chevron-down" /></svg>
-    </i>
-</a>
-<div class="navPage-subMenu" id="navPages-{{id}}" aria-hidden="true" tabindex="-1">
-    <ul class="navPage-subMenu-list">
-        <li class="navPage-subMenu-item">
-            <a class="navPage-subMenu-action navPages-action"
-               href="{{url}}"
-               aria-label="{{lang 'category.view_all.name' category=name}}"
-            >
-                {{lang 'category.view_all.name' category=name}}
-            </a>
-        </li>
-        {{#each children}}
-            <li class="navPage-subMenu-item">
-                {{#if children}}
-                    <a class="navPage-subMenu-action navPages-action has-subMenu{{#if is_active}} activePage{{/if}}"
-                       href="{{url}}"
-                       aria-label="{{name}}"
-                    >
-                        {{name}}
-                        <span class="collapsible-icon-wrapper"
-                            data-collapsible="navPages-{{id}}"
-                            data-collapsible-disabled-breakpoint="medium"
-                            data-collapsible-disabled-state="open"
-                            data-collapsible-enabled-state="closed"
+
+
+<div class="mega-menu">
+
+    <div class="megamenu-inner">
+        <ul class="navPage-subMenu-list l2-container">
+            {{#each categories}}
+            
+          <li class="navPage-subMenu-item" id="navPages-{{id}}">
+                 
+                        <a class="navPage-subMenu-action navPages-action has-subMenu{{#if is_active}} activePage{{/if}}"
+                        href="{{url}}"
+                        aria-label="{{name}}"
                         >
-                            <i class="icon navPages-action-moreIcon" aria-hidden="true">
-                                <svg><use href="#icon-chevron-down" /></svg>
-                            </i>
-                        </span>
-                    </a>
-                    <ul class="navPage-childList" id="navPages-{{id}}">
+                            {{name}}
+
+                            {{assignVar 'catename' name}}
+    
+                        {{#if children}}
+                        <i class="icon navPages-action-moreIcon" aria-hidden="true">
+                            <svg><use xlink:href="#icon-chevron-down" /></svg>
+                        </i>
+                         {{/if}}
+    
+                        </a>
+                   
+          </li>
+          {{/each}}
+        </ul>
+    
+       
+        <div class="l3-container">
+            {{#each categories}}
+            
+            <ul class="navPage-childList" id="navPages-{{id}}" id="navPages-{{id}}" aria-hidden="true" tabindex="-1">
+                <div class="category-widget-wrapper">
+
+                    <div class="div-wrap">
+                        {{{region name="header_promo_banner--global"}}}                         
+                    </div>
+                    
+                    <div class="div-wrap">                                
+                        {{{region name=(concat (strReplace (dashcase name) "&" "-") "--global")}}}                        
+                </div>
+
+                </div>
+
+           
+                <div class="navpage-child-category-wrapper">                  
+                    <div class="navpage-child-wrapper"> 
                         {{#each children}}
                         <li class="navPage-childList-item">
-                            <a class="navPage-childList-action navPages-action{{#if is_active}} activePage{{/if}}"
-                               href="{{url}}"
-                               aria-label="{{name}}"
+                            <a class="navPage-childList-action navPages-action category-childlren{{#if is_active}} activePage{{/if}}"
+                            href="{{url}}"
+                            aria-label="{{name}}"
                             >
-                                {{name}}
+                            {{name}}
                             </a>
+                            
+                            {{#if children}}
+                            <ul class="navPage-childList-inner navPage-childLists" id="navPages-{{id}}" style="margin: 0;">
+                                
+                                {{#each children}}
+                                <li class="navPage-childList-action navPages-action{{#if is_active}} activePage{{/if}}">
+                                    <a href="{{url}}" class="navPage-childList-action navPages-action{{#if is_active}} activePage{{/if}}">
+                                        {{name}}
+                                    </a>
+                                </li>
+                                {{/each}}
+                            </ul>
+                            {{/if}}
+                     
                         </li>
                         {{/each}}
-                    </ul>
-                {{else}}
-                    <a class="navPage-subMenu-action navPages-action{{#if is_active}} activePage{{/if}}"
-                       href="{{url}}"
-                       aria-label="{{name}}"
-                    >
-                        {{name}}
+                    </div>
+                </div>
+              
+            </ul>
+
+          {{/each}}
+
+          <div>
+
+   
+
+    </div>
+ 
+</div>
+    
+</div>
+</div>
+
+
+<ul class="navPages-list navItems nav-mob">
+
+<div class="first-level">
+
+    {{#each pages}}
+    <li class="navPages-item navPages-item-page">
+        <a class="navPages-action {{#if name '==' 'Products'}} productNavAction  {{/if}} {{#if is_active}} activePage{{/if}}"
+        href="{{url}}"
+        >
+            {{name}}
+            {{#if name '==' 'Products'}}
+            
+            <i class="icon navPages-action-moreIcon" aria-hidden="true">
+                <svg><use xlink:href="#icon-chevron-down" /></svg>
+            </i>
+            {{/if}}
+        </a>
+    </li>
+ {{/each}}
+    {{#each categories}}
+        <li class="navPages-item">
+            <a class="navPages-action" href="{{#if children}}#{{else}}{{url}}{{/if}}" aria-label="{{name}}" {{#if children}}data-level-id="#menu{{id}}"{{/if}}>{{name}}
+           {{#if children}}
+           <img src="https://cdn11.bigcommerce.com/s-rktwx7erof/images/stencil/original/image-manager/nav-show-more-arrow.png" alt="arrow">
+            {{/if}}
+        </a>
+        </li>
+    {{/each}}
+</div>
+
+{{#each categories}}
+    {{#if children}}
+        <div class="second-level" id="menu{{id}}">
+            <li class="navPages-item">
+                <a class="back-btn" href="#" data-level-id="#menu{{id}}">
+                 {{name}}
+                </a>
+            </li>
+
+            <li><a href="{{url}}" class="menutitle"> {{name}}</a>
+            </li>
+
+            {{#each children}}
+                <li class="navPages-item">
+                    <a class="navPages-action {{#if children}}hasL3ChildrenMobile{{/if}}" href="{{#if children}}#{{else}}{{url}}{{/if}}" aria-label="{{name}}" {{#if children}}data-level-id="#menu{{id}}"{{/if}}>{{name}}
                     </a>
-                {{/if}}
+                </li>
+            {{/each}}
+        </div>
+    {{/if}}
+{{/each}}
+
+
+    {{#each categories}}
+    {{#each children}}
+    {{#if children}}
+    <div class="third-level" id="menu{{id}}">
+        <li class="navPages-item">
+            <a class="back-btn" href="#" data-level-id="#menu{{id}}">
+             {{name}}
+            </a>
+            </li>
+            <li><a href="{{url}}" class="menutitle">{{name}}</a>
+        </li>
+        {{#each children}}
+            <li class="navPages-item">
+                <a class="navPages-action" href="{{url}}" aria-label="{{name}}">
+                    {{name}}
+                </a>
             </li>
         {{/each}}
-    </ul>
-</div>
-{{else}}
-<a class="navPages-action{{#if is_active}} activePage{{/if}}"
-   href="{{url}}"
-   aria-label="{{name}}"
->
-    {{name}}
-</a>
-{{/if}}
+    </div>
+    {{/if}}
+    {{/each}}
+    {{/each}}
+
+</ul>
